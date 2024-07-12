@@ -2,6 +2,9 @@
 - This is software designed to automate the preprocessing of plant specimen data. 
 - It enables the detection and removal of non-plant specimen components from plant specimen image datasets.
 
+## Initial Data
+![Example of labeling non-plant specimen components](https://github.com/user-attachments/assets/f1042557-69c4-4254-810b-d95e5b9fea90)
+
 # Modify detect_dual.py
 
 - Detect all objects except plant specimens in an image using the trained YOLO v9-e model.
