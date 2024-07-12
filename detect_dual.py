@@ -3,7 +3,7 @@ import os
 import platform
 import sys
 from pathlib import Path
-
+import numpy as np
 import torch
 
 FILE = Path(__file__).resolve()
@@ -141,25 +141,16 @@ def run(
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        #print('shape 확인',type(im0))
                         if names[c] != 'Specimen':#'':
-                        # Fill the bounding box area with white
                             x1, y1, x2, y2 = map(int, xyxy)
                             im0[y1:y2, x1:x2] = 255  # Fill with white color
-                            #continue
                             
                         else:
-                            import numpy as np
+                            
                             x1, y1, x2, y2 = map(int, xyxy)
-                            #print(x1, y1, x2, y2 )
-                            #print('im0',im0.shape)
                             mask = 255 * np.ones_like(im0)  # Create a white mask
-                            #cv2.imwrite('/home/ml/Desktop/sung/Plant_/yolov9/runs/detect/tmp.jpg', mask)
                             mask[y1:y2, x1:x2] = im0[y1:y2, x1:x2]  # Keep the area inside the box
-                            #print('mask',np.unique(mask[y1:y2, x1:x2]))
-                            #cv2.imwrite('/home/ml/Desktop/sung/Plant_/yolov9/runs/detect/tmp2.jpg', mask)
                             im0 = mask
-                            #cv2.imwrite('/home/ml/Desktop/sung/Plant_/yolov9/runs/detect/tmp3.jpg', im0)
                                         
                         #annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
