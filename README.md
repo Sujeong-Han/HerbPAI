@@ -6,7 +6,7 @@
 
 - Detect all objects except plant specimens in an image using the trained YOLO v9-e model.
 - After that, fill the bounding box of detected objects with white.
-- This also detects the edges of the sample data and has been modified to remove outliers.
+- This also detects the edges of the digital camera image has been modified to remove outliers.
 
 # Inference
  ```
