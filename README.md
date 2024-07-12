@@ -2,7 +2,7 @@
 - This is software designed to automate the preprocessing of plant specimen data. 
 - It enables the detection and removal of non-plant specimen components from plant specimen image datasets.
 
-## Initial Data
+## Ex) Data Label
 ![Example of labeling non-plant specimen components](https://github.com/user-attachments/assets/f1042557-69c4-4254-810b-d95e5b9fea90)
 
 # Modify detect_dual.py
@@ -18,8 +18,6 @@ python detect_dual.py --source example.jpg' --img 640 --device 0 --weights 'best
 
 - You can find model weight in google drive.
 - If you run above inference code, you can find output image in test folder. 
-
-
 
 
 
