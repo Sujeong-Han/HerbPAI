@@ -7,7 +7,7 @@
 - Detect all objects except plant in an image using the trained YOLO v9-e model.
 - After that, fill the bounding box of detected objects with white.
 - Additionally, for images taken with digital cameras, unnecessary information outside the specimen.
-- 
+  
 # Inference
  ```
 python detect_dual.py --source example.jpg' --img 640 --device 0 --weights 'best.pt' --name test
