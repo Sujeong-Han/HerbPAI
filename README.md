@@ -1,13 +1,13 @@
 # Automated Preprocess Herbarium SW
-- This is software designed to automate the preprocessing of plant specimen data. 
+- This is software designed to automate the preprocessing of plant specimen images. 
 - It enables the detection and removal of non-plant specimen components from plant specimen image datasets.
 
 # Modify detect_dual.py
 
-- Detect all objects except plant specimens in an image using the trained YOLO v9-e model.
+- Detect all objects except plant in an image using the trained YOLO v9-e model.
 - After that, fill the bounding box of detected objects with white.
-- This also detects the edges of the digital camera image has been modified to remove outliers.
-
+- Additionally, for images taken with digital cameras, unnecessary information outside the specimen.
+- 
 # Inference
  ```
 python detect_dual.py --source example.jpg' --img 640 --device 0 --weights 'best.pt' --name test
