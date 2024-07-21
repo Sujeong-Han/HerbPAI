@@ -1,9 +1,10 @@
-# Automated Preprocess Herbarium SW
+# HerbPAI: Herbarium image Preprocessing for AI Identification
 - This is software designed to automate the preprocessing of plant specimen images. 
 - It enables the detection and removal of non-plant specimen components from plant specimen image datasets.
+<p align="center"><img src="https://github.com/user-attachments/assets/5799a4c5-1344-4d84-9b09-ae3877ad5965"></p>
 
+  
 # Modify detect_dual.py
-
 - Detect all objects except plant in an image using the trained YOLO v9-e model.
 - After that, fill the bounding box of detected objects with white.
 - Additionally, for images taken with digital cameras, unnecessary information outside the specimen.
