@@ -18,7 +18,7 @@ python detect_dual.py --source example.jpg' --img 640 --device 0 --weights 'best
 - If you run above inference code, you can find output image in test folder. 
 
 ## Ex) Original Image
-![Before](https://github.com/user-attachments/assets/e5b840ec-03db-4f23-9083-6db1f532ccf0) |![Before2](https://github.com/user-attachments/assets/80fb7b21-6e0e-429a-b5b0-63d499fd1899)
+![original](https://github.com/user-attachments/assets/070444f2-9349-4ec4-961f-7cfa49c6e825) |![Before2](https://github.com/user-attachments/assets/80fb7b21-6e0e-429a-b5b0-63d499fd1899)
 --- | --- | 
 
 ## Ex) Data Label
@@ -26,7 +26,7 @@ python detect_dual.py --source example.jpg' --img 640 --device 0 --weights 'best
 --- | --- | 
 
 ## Ex) Preprocessed Image
-![After](https://github.com/user-attachments/assets/4a17445c-8c13-4a9c-aff0-40d7666ba5d4)|![After2](https://github.com/user-attachments/assets/50bb97cc-f545-49de-aea8-94b350c2c4ea)
+![After(digital)](https://github.com/user-attachments/assets/4acc2fb4-6de1-408f-b0db-75431591694b)|![after2](https://github.com/user-attachments/assets/47d77097-1add-47c3-a0b6-b9ffc8948f52)
 --- | --- | 
 
 
