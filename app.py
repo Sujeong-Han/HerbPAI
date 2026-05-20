@@ -1,3 +1,6 @@
+import subprocess
+subprocess.run(["python", "patch_gradio.py"])
+
 import gradio as gr
 import torch
 import sys
