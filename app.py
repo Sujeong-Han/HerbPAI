@@ -98,7 +98,7 @@ with gr.Blocks(title="HerbPAI") as demo:
                 with gr.Column():
                     output_image = gr.Image(label="Result (non-plant components removed)")
                     stats_text = gr.Textbox(label="Detection stats", lines=3, interactive=False)
-            crop_gallery = gr.Gallery(label="Detected crops", columns=6, height=180)
+            crop_gallery = gr.Textbox(label="Detected crop labels", interactive=False)
             run_btn.click(fn=handle, inputs=[input_image, img_size, conf_thres, save_crops],
                          outputs=[output_image, stats_text, crop_gallery])
         with gr.Tab("How to use"):
@@ -114,4 +114,4 @@ with gr.Blocks(title="HerbPAI") as demo:
             """)
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True)
