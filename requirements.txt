@@ -12,4 +12,3 @@ seaborn>=0.11.0
 matplotlib>=3.2.2
 psutil
 ipython
-huggingface_hub==0.23.0
