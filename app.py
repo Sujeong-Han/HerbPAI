@@ -72,7 +72,7 @@ def handle(files, img_size, conf_thres, save_crops):
     if not files:
         return [], None, "No images uploaded.", []
 
-    images = [Image.open(f.name).convert("RGB") for f in files]
+    images = [Image.open(f).convert("RGB") for f in files]
     all_results = []
     all_crops = []
     all_stats = {"count": 0, "classes": {}}
