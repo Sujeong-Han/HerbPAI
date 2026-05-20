@@ -1,5 +1,4 @@
-# This runs before gradio imports
-import re, os, sys
+import os, sys
 
 utils_path = None
 for path in sys.path:
@@ -15,6 +14,10 @@ if utils_path:
         'if "const" in schema:',
         'if isinstance(schema, dict) and "const" in schema:'
     )
+    src = src.replace(
+        'if "enum" in schema:',
+        'if isinstance(schema, dict) and "enum" in schema:'
+    )
     with open(utils_path, "w") as f:
         f.write(src)
-    print(f"✅ Patched: {utils_path}")
+    print(f"Patched: {utils_path}")
