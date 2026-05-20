@@ -10,13 +10,17 @@ for path in sys.path:
 if utils_path:
     with open(utils_path, "r") as f:
         src = f.read()
-    src = src.replace(
-        'if "const" in schema:',
-        'if isinstance(schema, dict) and "const" in schema:'
+    # 모든 "X in schema" 패턴을 안전하게 패치
+    import re
+    src = re.sub(
+        r'if "(\w+)" in schema:',
+        r'if isinstance(schema, dict) and "\1" in schema:',
+        src
     )
-    src = src.replace(
-        'if "enum" in schema:',
-        'if isinstance(schema, dict) and "enum" in schema:'
+    src = re.sub(
+        r'elif "(\w+)" in schema:',
+        r'elif isinstance(schema, dict) and "\1" in schema:',
+        src
     )
     with open(utils_path, "w") as f:
         f.write(src)
