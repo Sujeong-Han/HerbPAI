@@ -1,5 +1,4 @@
-import subprocess
-subprocess.run(["python", "patch_gradio.py"])
+import fix_gradio_client  # patch BEFORE importing gradio
 
 import gradio as gr
 import torch
