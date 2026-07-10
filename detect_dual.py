@@ -130,31 +130,41 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
-                # Write results
+                # ===== 2-PASS 로직 (HuggingFace app.py 와 동일) =====
+                # PASS 0: 박스를 Specimen / non-Specimen 으로 분리
+                specimen_boxes = []       # (x1, y1, x2, y2, conf)
+                non_specimen_boxes = []   # (x1, y1, x2, y2, conf)
                 for *xyxy, conf, cls in reversed(det):
+                    c = int(cls)  # integer class
+                    x1, y1, x2, y2 = map(int, xyxy)
+
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(f'{txt_path}.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
-                    if save_img or save_crop or view_img:  # Add bbox to image
-                        c = int(cls)  # integer class
-                        label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        if names[c] != 'Specimen':#'':
-                            x1, y1, x2, y2 = map(int, xyxy)
-                            im0[y1:y2, x1:x2] = 255  # Fill with white color
-                            
-                        else:
-                            
-                            x1, y1, x2, y2 = map(int, xyxy)
-                            mask = 255 * np.ones_like(im0)  # Create a white mask
-                            mask[y1:y2, x1:x2] = im0[y1:y2, x1:x2]  # Keep the area inside the box
-                            im0 = mask
-                                        
-                        #annotator.box_label(xyxy, label, color=colors(c, True))
-                    if save_crop:
+                    if names[c] == 'Specimen':
+                        specimen_boxes.append((x1, y1, x2, y2, float(conf)))
+                    else:
+                        non_specimen_boxes.append((x1, y1, x2, y2, float(conf)))
+
+                    if save_crop:  # 크롭은 흰색 처리 전의 원본(imc)에서
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
+
+                if save_img or save_crop or view_img:
+                    # PASS 1: 비-Specimen 영역(바코드·자 등) 전부 흰색 처리
+                    for (bx1, by1, bx2, by2, _) in non_specimen_boxes:
+                        im0[by1:by2, bx1:bx2] = 255
+
+                    # PASS 2: 가장 큰 Specimen 박스 하나만 흰 배경에 남기기
+                    if specimen_boxes:
+                        largest = max(specimen_boxes, key=lambda b: (b[2] - b[0]) * (b[3] - b[1]))
+                        sx1, sy1, sx2, sy2, _ = largest
+                        white_canvas = 255 * np.ones_like(im0)  # 전체 흰 배경
+                        white_canvas[sy1:sy2, sx1:sx2] = im0[sy1:sy2, sx1:sx2]  # Specimen 영역만 복사
+                        im0 = white_canvas
+                    # Specimen 이 없으면 im0 은 비-Specimen 만 흰색 처리된 상태로 유지
 
             # Stream results
             #im0 = annotator.result()
