@@ -1,15 +1,3 @@
----
-title: HerbPAI
-emoji: 🌿
-colorFrom: green
-colorTo: green
-sdk: gradio
-sdk_version: 5.29.1
-app_file: app.py
-pinned: false
-python_version: "3.10"
----
-
 # HerbPAI
 
 **Herbarium specimen image preprocessing for AI.**
