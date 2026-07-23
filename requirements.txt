@@ -1,7 +1,17 @@
+# HerbPAI requirements
+# Python 3.10
+
+# --- Core ---
 torch>=1.7.0
 torchvision>=0.8.1
+
+# IMPORTANT: OpenCV and PyTorch wheels are built against NumPy 1.x.
+# Installing NumPy 2.x causes:
+#   ImportError: numpy.core.multiarray failed to import
+# Do not relax this pin unless the dependencies are rebuilt for NumPy 2.
+numpy>=1.18.5,<2
+
 opencv-python-headless>=4.1.1
-numpy>=1.18.5
 Pillow>=7.1.2
 PyYAML>=5.3.1
 requests>=2.23.0
@@ -12,3 +22,7 @@ seaborn>=0.11.0
 matplotlib>=3.2.2
 psutil
 ipython
+
+# --- Web demo (app.py / Hugging Face Space) ---
+# Not needed for local batch processing with detect_dual.py.
+gradio==5.29.1

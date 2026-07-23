@@ -49,6 +49,8 @@ def run(
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
+        crop_margin=0,  # Specimen 크롭 여백(px). 음수면 테두리를 안쪽으로 깎음
+        keep_canvas=False,  # True 면 자르지 않고 원본 크기 흰 배경 유지(구버전 동작)
 ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -157,13 +159,27 @@ def run(
                     for (bx1, by1, bx2, by2, _) in non_specimen_boxes:
                         im0[by1:by2, bx1:bx2] = 255
 
-                    # PASS 2: 가장 큰 Specimen 박스 하나만 흰 배경에 남기기
+                    # PASS 2: 가장 큰 Specimen 박스만 남기기
                     if specimen_boxes:
                         largest = max(specimen_boxes, key=lambda b: (b[2] - b[0]) * (b[3] - b[1]))
                         sx1, sy1, sx2, sy2, _ = largest
-                        white_canvas = 255 * np.ones_like(im0)  # 전체 흰 배경
-                        white_canvas[sy1:sy2, sx1:sx2] = im0[sy1:sy2, sx1:sx2]  # Specimen 영역만 복사
-                        im0 = white_canvas
+
+                        h, w = im0.shape[:2]
+                        if keep_canvas:
+                            # (구버전 동작) 원본 크기 흰 배경 위에 Specimen 영역만 남김 → 흰 여백 생김
+                            white_canvas = 255 * np.ones_like(im0)
+                            white_canvas[sy1:sy2, sx1:sx2] = im0[sy1:sy2, sx1:sx2]
+                            im0 = white_canvas
+                        else:
+                            # (기본 동작) Specimen 박스 크기로 잘라냄 → 흰 여백 없음
+                            # crop_margin: 양수면 바깥으로 확장, 음수면 테두리를 안쪽으로 깎음
+                            m = crop_margin
+                            cx1 = max(0, sx1 - m)
+                            cy1 = max(0, sy1 - m)
+                            cx2 = min(w, sx2 + m)
+                            cy2 = min(h, sy2 + m)
+                            if cx2 > cx1 and cy2 > cy1:  # 유효한 영역일 때만 자르기
+                                im0 = im0[cy1:cy2, cx1:cx2].copy()
                     # Specimen 이 없으면 im0 은 비-Specimen 만 흰색 처리된 상태로 유지
 
             # Stream results
@@ -237,6 +253,10 @@ def parse_opt():
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
     parser.add_argument('--vid-stride', type=int, default=1, help='video frame-rate stride')
+    parser.add_argument('--crop-margin', type=int, default=0,
+                        help='margin (px) around the specimen crop; negative trims the border inward')
+    parser.add_argument('--keep-canvas', action='store_true',
+                        help='keep original image size with white background instead of cropping')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
