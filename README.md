@@ -1,16 +1,7 @@
----
-title: HerbPAI
-emoji: 🌿
-colorFrom: green
-colorTo: green
-sdk: gradio
-sdk_version: 5.29.1
-app_file: app.py
-pinned: false
-python_version: "3.10"
----
-
 # HerbPAI
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17402272.svg)](https://doi.org/10.5281/zenodo.17402272)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 **Herbarium specimen image preprocessing for AI.**
 
@@ -242,16 +233,27 @@ Please check the output visually before using it for downstream training.
 
 ## Citation
 
-<!-- TODO: replace with the final SoftwareX citation + Zenodo DOI -->
+If you use HerbPAI in your research, please cite the archived software:
+
+> Han, S. (2026). *HerbPAI: a Herbarium specimen image Preprocessing tool for AI*
+> [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17402272
 
 ```bibtex
-@article{han_herbpai,
-  title   = {HerbPAI: an open-source tool for herbarium specimen image preprocessing},
-  author  = {Han, Sujeong},
-  journal = {SoftwareX},
-  year    = {2026}
+@software{han_herbpai,
+  title     = {HerbPAI: a Herbarium specimen image Preprocessing tool for AI},
+  author    = {Han, Sujeong},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.17402272},
+  url       = {https://doi.org/10.5281/zenodo.17402272}
 }
 ```
+
+The DOI above resolves to the **latest** release. To cite the exact version used
+in a specific analysis, use its version DOI instead — for v2.0.0 that is
+[`10.5281/zenodo.21504075`](https://doi.org/10.5281/zenodo.21504075).
+
+<!-- TODO: add the journal article citation once published -->
 
 ## License
 
