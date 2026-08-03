@@ -38,7 +38,7 @@ and the same processing logic.
 
 ![HerbPAI pipeline](docs/images/pipeline_en.png)
 
-1. **Detect** — YOLOv9-e finds bounding boxes for 11 classes.
+1. **Detect** — YOLOv9-e finds bounding boxes for 12 classes.
 2. **Sort the boxes** — into `Specimen` and everything else. (Nothing is changed
    yet; this ordering step is what makes the result reproducible.)
 3. **Erase non-specimen** — every non-specimen box is painted white.
@@ -205,11 +205,11 @@ Anaconda is not installed, or the terminal was not restarted. See the
 - Architecture: **YOLOv9-e**
 - Weights: `best.pt` (~133 MB, via Git LFS). CPU inference; no GPU required.
 
-HerbPAI detects **11 classes**. Only `Specimen` is kept:
+HerbPAI detects **12 classes**. Only `Specimen` is kept:
 
 | Kept | Removed |
 |---|---|
-| `Specimen` | `Annotation_label`, `Barcode`, `DB_stamp`, `Envolope`, `Image`, `Institution_stamp`, `Label`, `Map`, `Palette`, `Ruler` |
+| `Specimen` | `Specimen_label`, `Institutional_stamp`, `Barcode`, `DB_stamp`, `Annotation_label`, `Color_palette`, `Ruler`, `Photo`, `Envelope`, `Map`, `Tag` |
 
 With `--save-crop`, every detected object is also saved to
 `runs/detect/<name>/crops/<class_name>/`, cropped from the **original**
